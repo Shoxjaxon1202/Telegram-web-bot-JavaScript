@@ -17,16 +17,21 @@
 .form-container .form-page {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  /* gap: 15px; */
 }
 
 .form-container .form-page label {
+  margin: 15px 0;
   font-size: 20px;
   font-weight: 600;
   display: flex;
   align-items: center;
   gap: 15px;
   color: #333;
+}
+.error-message{
+  color: red;
+  font-size: 12px;
 }
 
 .form-container .form-page label span {
@@ -75,7 +80,14 @@
   justify-content: space-between;
 }
 
-.form-container .form-page .buttons button {
+.buttons{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#next-btn,
+#back-btn {
+  margin-top: 20px;
   padding: 8px 18px;
   font-size: 16px;
   background-color: black;
