@@ -129,21 +129,27 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll("input, textarea").forEach((input) => {
       input.addEventListener("keydown", (e) => {
         if (e.key === "Enter") {
-          e.preventDefault(); // Enter tugmasini standart tarzda formni yubormaslik uchun bloklash
+          e.preventDefault(); // Enter tugmasini standart submitdan bloklash
 
-          if (validateForm()) {
-            if (currentPage === 4) {
-              // Agar eng oxirgi sahifada bo'lsak
-              document.getElementById("next-btn").click();
+          // Hozirgi inputni tekshirish
+          if (!input.value.trim()) {
+            input.focus(); // Agar hozirgi input bo'sh bo'lsa, fokus shu joyda qolsin
+            const errorMessage = input.nextElementSibling;
+            if (
+              errorMessage &&
+              errorMessage.classList.contains("error-message")
+            ) {
+              errorMessage.style.display = "block"; // Xatolik xabarini ko'rsatish
+            }
+          } else {
+            const nextInput = getNextInput(currentPage);
+            if (nextInput) {
+              nextInput.focus(); // Keyingi inputga fokus o'tadi
+            } else if (currentPage < 4) {
+              currentPage++;
+              renderApp(); // Keyingi sahifaga o'tish
             } else {
-              const nextInput = getNextInput(currentPage);
-              if (nextInput && nextInput.value.trim()) {
-                nextInput.focus(); // Keyingi inputga o'tish
-              } else {
-                // Agar barcha inputlar to'ldirilgan bo'lsa, keyingi sahifaga o'tish
-                currentPage++;
-                renderApp();
-              }
+              document.getElementById("next-btn").click(); // Oxirgi sahifada bo'lsa, submit qilinadi
             }
           }
         }
@@ -184,13 +190,16 @@ document.addEventListener("DOMContentLoaded", () => {
         if (errorMessage && errorMessage.classList.contains("error-message")) {
           errorMessage.style.display = "block"; // Xatolik xabarini ko'rsatish
         }
+
+        // Fokus faqat birinchi xato input yoki textarea ga o'tadi
         if (
+          isValid &&
           currentPage === parseInt(input.closest(".form-page").dataset.page)
         ) {
           input.focus();
         }
       } else {
-        input.style.borderColor = "";
+        input.style.borderColor = ""; // Xato yo'q bo'lsa chegarani normal ko'rinishga qaytarish
         if (errorMessage && errorMessage.classList.contains("error-message")) {
           errorMessage.style.display = "none"; // Xatolik xabarini yashirish
         }

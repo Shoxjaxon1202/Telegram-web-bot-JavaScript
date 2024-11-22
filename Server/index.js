@@ -23,7 +23,6 @@ const bootstrap = () => {
 
     try {
       if (text === "/start") {
-        // "/start" komandasi uchun javob
         await bot.sendMessage(
           chatId,
           "Assalomu alaykum! Ustozlar hisoboti bo'limiga xush kelibsiz!\n\n" +
@@ -35,7 +34,7 @@ const bootstrap = () => {
                   {
                     text: "Ustozlar hisoboti",
                     web_app: {
-                      url: "https://telegram-web-bot-rt3k.vercel.app/", // Web App uchun URL
+                      url: "https://telegram-web-bot-java-script-bjvb.vercel.app/", // Web App uchun URL
                     },
                   },
                 ],
